@@ -1,0 +1,19 @@
+$browser-context: 14;
+
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
+$sprite-path: '../../images/sprite.png';
+
+$lato: 'Lato', sans-serif;
+$font-fa: FontAwesome;
+
+$black: #000;
+$lightblack: #131313;
+$white: #fff;
+$red: #d82731;
+$darkred: #ca171f;
+$textcolor: #464646;
+$green: #8cc634;
+$grey: #e4e4e4;

@@ -1,0 +1,48 @@
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Password Reset
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <section class="reset-section">
+        <div class="container py-5">
+            <div class="offset-md-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>New Password</h1>
+                        <form action="<?php echo e(route('client-reset-password', [$userId, $passwordResetCode])); ?>" method="POST">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control" placeholder="New Password">
+                            </div>
+                            <?php if($errors->resetPassword->first('password')): ?>
+                                <div id="password" class="invalid-feedback">
+                                    <?php echo e($errors->resetPassword->first('password')); ?>
+
+                                </div>
+                            <?php endif; ?>
+                            <div class="form-group">
+                                <input type="password" name="password_confirm" class="form-control" placeholder="New Confirm Password">
+                            </div>
+                            <?php if($errors->resetPassword->first('password_confirm')): ?>
+                                <div id="password_confirm" class="invalid-feedback">
+                                    <?php echo e($errors->resetPassword->first('password_confirm')); ?>
+
+                                </div>
+                            <?php endif; ?>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-outline-success">Save Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

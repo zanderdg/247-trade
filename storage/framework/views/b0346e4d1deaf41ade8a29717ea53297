@@ -1,0 +1,132 @@
+<?php $__env->startSection('title'); ?>
+Preview leads
+@parent
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('head_style'); ?>
+    <style>
+        .map_div {
+            height: 20rem;
+        }
+        #map {
+            height: 100%!important;
+        }
+        .h-f-content {
+            height: fit-content;
+        }
+    </style>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <div class="container overflow-hidden">
+        <a href="<?php echo e(route('liveleads')); ?>" class="text-success">
+            <p><i class="mr-2 fa fa-arrow-left"></i><strong>Back to leads</strong></p>
+        </a>
+        <div class="row">
+            <div class="col-12 mx-3">
+                <h3 class="p-0"><?php echo e($job->title); ?></h3>
+                <small class="mr-2"><?php echo e($job->category_name); ?></small>|<small class="ml-2"><?php echo e($job->sub_category_id); ?></small>
+            </div>
+            <div class="col-12 info-bar">
+                <div class="mx-3 d-flex justify-content-between">
+                    <small class="text-uppercase">REF:<strong class="ml-2"><?php echo e($job->reference_number); ?></strong></small>
+                    <small class="text-uppercase"><strong><?php echo e($job->created_at->diffForHumans(null, true).' ago'); ?></strong></small>
+                </div>
+                <hr class="my-1">
+            </div>            
+            <div class="col-12 mt-2 job-detail">
+                <div class="post-div">
+                    <div class="post-des col-md-9">
+                        <p><?php echo e($job->description); ?></p>
+                    </div>
+                    <div class="post-info col-md-3">
+                        <p>Location: <strong class="ml-2"><?php echo e($job->location); ?>, <?php echo e($job->postcode); ?></strong></p>
+                    </div>
+                </div>
+                <hr class="my-3">
+            </div>
+            <div class="col-12 job-price">
+                <div class="mx-3 d-flex justify-content-between">
+                    <button class="btn btn-outline-danger btn-sm text-uppercase" id="notinter">Not Interested</button>
+                    <?php if(Sentinel::check() && Sentinel::getUser()->roles[0]->slug =='tradeperson'): ?>
+                        <?php $arr = []; ?>
+                        <?php foreach($job->leadPurchaseBy as $leadsId): ?>
+                        <?php $arr[] = $leadsId->id; ?>
+                        <?php endforeach; ?>
+                        <?php if(!in_array(Sentinel::getUser()->id, $arr)): ?>
+                            <div class="price-label d-flex d-flex-inline">
+                                <span class="px-2 mt-1 text-uppercase"><strong>Buy Now</strong></span>
+                                <a href="<?php echo e(route('checkout', $job->id)); ?>" class="btn btn-sm btn-outline-success text-uppercase">£5 + VAT</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="m-0 alert alert-info" role="alert">
+                                You already purchase lead on this job — <a href="<?php echo e(route('client-dashboard')); ?>" class="alert-link text-uppercase">My Leads</a>
+                            </div>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <div class="m-0 alert alert-info" role="alert">
+                            Need to Login and register! — <a href="<?php echo e(route('client-login')); ?>"><strong class="text-uppercase">Login</strong></a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <hr class="my-3">
+            </div>
+            <div class="col-12 mt-2 job-detail">
+                <div class="mx-3">
+                    <h3><strong>Map</strong></h3>
+                    <div class="map_div overflow-hidden rounded">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footer_script'); ?>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo e(env('Google_MAP_KEY')); ?>&geometry=&v=weekly&libraries=&v=weekly" defer ></script>
+    <script>
+        const UK_BOUNDS = {
+            north: 61.061,
+            south: 49.674,
+            west: -14.015,
+            east: 2.091,
+        };
+        $(document).ready(function() {
+            let map;
+
+            map = new google.maps.Map( document.getElementById("map"), {
+                zoom: 12,
+                center: { lat:<?php echo e($job->lat); ?> , lng:<?php echo e($job->lng); ?>},
+                clickableIcons: false,
+                scrollwheel: false,
+                mapTypeId: "roadmap",
+                mapTypeControl: false,
+                zoomControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                draggable: false,
+                restriction: {
+                    latLngBounds: UK_BOUNDS,
+                    strictBounds: true,
+                }                
+            })
+            new google.maps.Circle({
+                strokeColor: "#03a36e",
+                strokeOpacity: 1,
+                strokeWeight: 3,
+                fillColor: "#03a36e",
+                fillOpacity: 0.05,
+                map,
+                center: { lat:<?php echo e($job->lat); ?> , lng:<?php echo e($job->lng); ?>},
+                radius: 30 * 100,
+            })
+        })
+        
+        $('#notinter').on('click', function(event){
+            event.preventDefault();
+            $.post('/live-leads/remove-lead', {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                job_id: '<?php echo e($job->id); ?>'
+            }).then(res => res.success ? window.location.replace(res.path) : null)
+        })
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

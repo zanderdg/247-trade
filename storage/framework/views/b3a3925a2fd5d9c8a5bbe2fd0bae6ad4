@@ -1,0 +1,142 @@
+<div class="tab-content" id="nav-tabContent">
+
+    <div class="tab-pane fade show" id="" role="tabpanel" aria-labelledby="">
+
+        <?php if($jobs): ?>
+
+        <?php foreach($jobs as $key => $job): ?>
+
+        <div class="card mb-2">
+
+            <div class="card-body">
+
+                <?php echo $job->deleted_at == null ?'': '<p class="text-warning">This job is on longer available.</p>'; ?>
+
+
+                <div class="row">
+
+                    <div class="col-10">
+
+                        <h3 class="card-title"> <strong> <?php echo e($job->sub_category_id); ?> / <?php echo e($job->title); ?> </strong></h3>
+
+                    </div>
+
+                    <div class="col-2 text-right">
+
+                        <div class="dropdown bars">
+
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+
+                                <i class="fa fa-bars" aria-hidden="true"></i></button>
+
+                            <ul class="dropdown-menu">
+
+                                <li><a onclick="moveTo('won', '<?php echo e($job->id); ?>')" class="btn btn-link" href="#">move to won</a></li>
+
+                                <li><a onclick="moveTo('done', '<?php echo e($job->id); ?>')" class="btn btn-link" href="#">move to done</a></li>
+
+                                <li><a onclick="moveTo('lost', '<?php echo e($job->id); ?>')" class="btn btn-link" href="#">move to lost</a></li>
+
+                                <li><a onclick="moveTo('archive', '<?php echo e($job->id); ?>')" class="btn btn-link" href="#">move to archive</a></li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4"><strong>Reference Number:</strong> <?php echo e($job->reference_number); ?></div>
+
+                    <div class="col-md-4 offset-md-4"><strong>Posted:</strong> <?php echo e($job->created_at->diffForHumans()); ?></div>
+
+                </div>
+
+                <div class="">
+
+                    <table>
+
+                        <tr>
+
+                            <th>Location: </th>
+
+                            <td><?php echo e($job->location); ?></td>
+
+                        </tr>
+
+                        <?php /* <tr>
+
+                                    <th>Status:</th>
+
+                                    <td><?php echo e($job->hiring_stage); ?></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Budget:</th>
+
+                            <td> <?php echo e($job->currency); ?><?php echo e($job->amount); ?></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Timing:</th>
+
+                            <td><?php echo e($job->timing); ?></td>
+
+                        </tr> */ ?>
+
+                        <?php /* <tr>
+
+                                    <th>OwnerShip: </th>
+
+                                    <td><?php echo e($job->ownership); ?></td>
+
+                        </tr> */ ?>
+
+                    </table>
+
+
+
+                </div>
+
+                <p><b>Description:</b> <?php echo e($job->description); ?> </p>
+
+                <hr>
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="col-12 p-0"><strong>Name:</strong> <?php echo e($job->owner_id->first_name); ?> <?php echo e($job->owner_id->last_name); ?></div>
+
+                        <div class="row">
+
+                            <div class="col-md-6"><strong>Email:</strong> <?php echo e($job->owner_id->email); ?></div>
+
+                            <div class="col-md-6"><strong>Phone:</strong> <?php echo e($job->owner_id->country_code); ?> <?php echo e($job->owner_id->phone); ?></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>

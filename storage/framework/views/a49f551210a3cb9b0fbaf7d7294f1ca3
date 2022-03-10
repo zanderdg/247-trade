@@ -1,0 +1,77 @@
+<?php /* * Template Name : Contact-us * */ ?>
+
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Contact
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <!-- signup section start -->
+    <section class="contact-section">
+        <div class="container">
+        <?php /* <div class="row">
+            <div class="image-wrap">
+            <div class="img-content">
+                <img src="<?php echo e(asset('assets/front_lib/images/Banner-1.png')); ?>" alt="">
+            </div>
+            <div class="overlay"></div>
+        </div> */ ?>
+        <div class="banner-content">
+            <h3>NEED MORE HELP?</h3>
+                <p class="text-uppercase">"get in touch today and our team wil be happy to answer any question you may have"</p>
+            </div>
+            <?php /* </div> */ ?>
+        </div>
+    </section>
+
+    <section class="signup-section contact-sss">
+        <div class="container">
+        <div class="row">
+            <div class="main login-dorm contact-foo">
+            <h3>Contact Form</h3>
+            <!-- errors -->
+            <div class="has-error">
+                <?php echo $errors->first('name', '<span class="help-block text-danger">:message</span> <br/>'); ?>
+
+                <?php echo $errors->first('email', '<span class="help-block text-danger">:message</span> <br/>'); ?>
+
+                <?php echo $errors->first('message', '<span class="help-block text-danger">:message</span> <br/>'); ?>
+
+            </div>
+            <form action="<?php echo e(route('create/contact')); ?>" method="POST">
+            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                <div class="form-group">
+                    <label for="inputUsername">Enter Your Name</label>
+                    <div class="input-container">
+                        <i class="fa fa-user"></i>
+                        <input type="text" name="name" class="form-control" id="inputUsername" value="<?php echo e(old('name')); ?>" placeholder="Enter name here"...>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputUsernameEmail">Enter Your Email</label>
+                    <div class="input-container">
+                        <i class="fa fa-user "></i>
+                        <input type="email" name="email" class="form-control" id="inputUsernameEmail" value="<?php echo e(old('email')); ?>" placeholder="Enter email here"...>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Enter Your Message</label>
+                    <div class="input-container">
+                        <textarea style="resize: none;" class="form-control" name="message" rows="5" id="comment" placeholder="Enter your message here..."><?php echo e(old('message')); ?></textarea>
+                    </div>
+                </div>
+                <div class="sign-up"> 
+                    <button type="submit" class="cancelbtn">SEND</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- signup section end -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

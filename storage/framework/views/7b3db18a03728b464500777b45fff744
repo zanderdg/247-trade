@@ -1,0 +1,164 @@
+<?php /* * Template Name : Home * */ ?>
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Welcome
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('head_style'); ?>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <div style="clear: both;"></div>
+    <div  id="CreateAJob" class="banner_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="best_taital">DISCOVER LOCAL TRADESPEOPLE IN YOUR AREA FOR YOUR JOB.</h1>
+                    <p class="there_text"> IT'S FREE TO POST YOUR JOB. MATCH TO TRADESPEOPLE AND WAIT TO BE CONTACTED FOR QUOTES IT'S AS EASY AS PUTTING THE KETTLE ON</p>
+                    <div class="box_main">
+                        <form action="<?php echo e(route('postJob')); ?>" method="get">
+                            <input type="text" class="email_bt" placeholder="<?php echo e(Session::get('message') !== null ? Session::get('message') : 'What Service are you looking for?'); ?>" name="categoryName" id="searchCat">
+                            <button type="submit" class="subscribe_bt">Next Step <span> ></span></button>
+                            <div id="searchResult"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php echo $__env->make('template.parts.categories', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<section class="thired-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 mt-5">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <ul class="pointsAtHome  mt-5">
+                            <li>Post a job free</li>
+                            <li>Get a <span>Quote</span></li>
+                            <li>Review <span>TRADESPEOPLE</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+		</div>
+    </section>
+
+    <div style="clear: both;"></div>
+    <section class="section-four">
+        <div class="mm-pp">
+            <p>RECENT</p>
+            <h3>JOB POSTS</h3>
+        </div>
+        <div class="container">
+		    <div class="row">
+                <div class="owl-carousel owl-theme custom-carousel">
+                    <?php foreach($ramdomJob as $job): ?>
+                    <div class="item">
+                        <!--<a href="<?php echo e(route('livelead-preview', $job->id)); ?>">-->
+                            <div class="form-group">
+                                <fieldset class="the-fieldset">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img style="border-radius: 50%;" src="<?php echo e(asset('assets/uploads/profilesImage').'/'.$job->picture); ?>">
+                                        </div>
+                                        <div class="col-9 pt-4">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h3><?php echo e($job->title); ?> </h3>
+                                                </div>
+                                                <div class="col-12">
+                                                    <?php /* <span>Designation</span> */ ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><?php echo e($job->description); ?></p>
+                                </fieldset>
+                            </div>
+                        <!--</a>-->
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+		    </div>
+	    </div>
+    </section>
+
+    <section class="section-five">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <figure class="figure mb-5">
+                        <iframe class="shadow rounded p-3" width="100%" height="315" src="https://www.youtube.com/embed/mk7kFvPwviE?controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe  class="shadow rounded p-3" width="100%" height="315" src="https://www.youtube.com/embed/AqFOjKGWokY?controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </figure>
+                </div>
+                <div class="col-sm-6 my-auto">
+                    <div class="home-carousel-two owl-theme owl-carousel">
+                        <?php if(isset($testimonials)): ?>
+                            <?php foreach($testimonials as $testimonial): ?>
+                                <div class="card mx-2">
+                                    <div class="card-body">
+                                        <?php /* <legend class="the-legend"><img src="<?php echo e(asset('assets/front_lib/images/testi-img.png')); ?>"></legend> */ ?>
+                                        <h3 class="card-title p-0"><?php echo e($testimonial->title); ?></h3>
+                                        <small class="mt-0"><?php echo e($testimonial->designation); ?></small> 
+                                        <p class="card-text m-0"> <?php echo $testimonial->content; ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <?php echo $__env->make('template.parts.trade&service', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_script'); ?>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        
+        // $(document).ready(function() {
+        //     $('.searchable-dropdown').select2();
+        // });
+        $(document).ready(function(){
+            $('#searchCat').keyup(function(){ 
+                var query = $(this).val();                
+                
+                if(query != '')
+                {
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url:"<?php echo e(route('s.services')); ?>",
+                        method:"POST",
+                        data:{query:query, _token:_token},
+                        success:function(data){
+                            if(data){
+                                $('#searchResult').fadeIn();  
+                                $('#searchResult').html(data);
+                            } else {
+                                $('#searchResult').hide();
+                            }
+                        }
+                    });
+                }
+            });
+            $(document).on('click', 'li', function(){  
+                $('#searchCat').val($(this).text());  
+                $('#searchResult').fadeOut();  
+            });
+        });
+
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

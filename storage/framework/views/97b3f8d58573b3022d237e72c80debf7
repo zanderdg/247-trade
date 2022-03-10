@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+        <?php /* <?php if($user->userDetails->postal == null): ?>
+            <div class="alert alert-warning my-2 mx-auto" role="alert">
+                <h2 class="alert-heading p-0">Warning!</h2>
+                <p class="m-0">Please complete your profile in order to post your job post for Tradespeople to see. Otherwise your post is only visible to you only.</p>
+                <hr>
+                <p class="m-0">Complete Profile, <a href="<?php echo e(route('update-profile',  $user->id)); ?>" class="alert-link">Profile</a></p>
+            </div>
+        <?php endif; ?> */ ?>
+        <div class="left-se">
+        </div>
+        <?php if(isset($res)): ?>
+            <?php foreach($res as $key => $job): ?>
+                <div class="col-md-12 py-2">
+                    <div class="card">
+                        <div class="card-body"> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title"><strong><?php echo e($job->sub_category_id); ?> / <?php echo e($job->title); ?></strong></h3>
+                                </div>
+                                <div class="offset-md-4 col-md-2 text-right">
+                                    <button onclick="discard(<?php echo e($job->id); ?>, '<?php echo e($job->title); ?>')" data-toggle="modal" data-target="#discardModel" class="btn btn-sm btn-danger">Delete Job</button>
+                                </div>
+                            </div>
+                            <div class="pl-3">
+                                <table>
+                                    <tr>
+                                        <th>Location: &nbsp; </th>
+                                        <td><?php echo $job->location ?? 'Not available'; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p> <b>Description:</b> <?php echo e($job->description); ?> </p>
+                            <div class="row mx-1">
+                            
+                            </div>
+                            <hr>
+                            <?php if($job->leadPurchaseBy != "[]"): ?>
+                                <?php echo is_null($job->leadPurchaseBy); ?>
+
+                                <div class="row">
+                                <?php foreach($job->leadPurchaseBy as $key => $tradepeople): ?>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table></table>
+                                                <p class="m-0"><strong>Name:</strong> <?php echo e(ucfirst($tradepeople->first_name)); ?> <?php echo e(ucfirst($tradepeople->last_name)); ?></p>
+                                                <p class="m-0"><strong>Email:</strong> <?php echo e($tradepeople->email); ?></p>
+                                                <p class="m-0"><strong>Phone:</strong> <?php echo e($tradepeople->userdetails->country_code); ?> <?php echo e($tradepeople->userdetails->phone); ?></p>
+                                                <div class="row">
+                                                    <div class="btn-review col-12 mt-3">
+                                                        <a href="<?php echo e(route('guest-profile-view', $tradepeople->id).'?a2dJU!!12JASE395W!&job='.$job->id.'&a2dJU!!120742AW!'); ?>" class="float-right badge badge-success ">View Profile</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                </div>
+                            <?php /* <?php else: ?>
+                                <div class="alert alert-primary m-0 text-center" role="alert">
+                                    <p class="m-0">Not yet purchase by anyone.</p>
+                                </div>  */ ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php /* <?php else: ?>
+            <div class="my-5 alert alert-success" role="alert">
+                <h4 class="alert-heading"><strong><?php echo e(Sentinel::getUser()->first_name); ?></strong></h4>
+                <p>Want to post a job? you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                <hr>
+                <p class="mb-0">Currently there is no job is posted by you.</p>
+            </div> */ ?>
+        <?php endif; ?>
+    </div>
+    <?php /* <?php echo $data->render(); ?>  */ ?>
+</div> 

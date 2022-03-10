@@ -1,0 +1,12 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="container">
+    <div class="content">
+        <?php echo e($user->email); ?>
+
+        <?php echo e($user->first_name); ?><p>, new job has been posted. Please check the 24/7 Tradeperson live-leads.</p>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('emails.layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

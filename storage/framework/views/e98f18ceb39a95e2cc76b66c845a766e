@@ -1,0 +1,11 @@
+<?php $__env->startSection('content'); ?>
+<p>Hello <?php echo $user['full_name']; ?>, Welcome to 24/7 TradesPeople!</p>
+
+<p>Please click on the following link to confirm your account: <a href="<?php echo URL::to('register/verify/'.$user['token']); ?>"><?php echo URL::to('register/verify/'.$user['token']); ?></a></p>
+
+<p>Regards,</p>
+
+<p><?php echo app('translator')->get('general.site_name'); ?> Team</p>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('emails/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

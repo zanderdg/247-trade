@@ -1,0 +1,21 @@
+<section class="section-six">
+    <div class="mm-pp">
+        <p>our trades and</p>
+        <h3>services</h3>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <?php foreach($categories as $key => $category): ?>
+                <div class="col-md-4 pr-2">
+                    <p class="m-0">
+                        <a href="<?php echo e(route('postJob')); ?>?categoryName=<?php echo e($category->name); ?>" >
+                            <?php echo e(ucfirst($category->name)); ?>
+
+                        </a>
+                    </p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

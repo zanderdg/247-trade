@@ -1,0 +1,27 @@
+
+<form action="<?php echo e(url('account/setting/service/'.Sentinel::getUser()->id.'/edit')); ?>" method="post">
+    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+    <div class="row my-2">
+        <div class="col-4">
+            <label>Add Service </label>
+        </div>
+        <div class="col-4 offset-4 text-right">
+            <a href="javascript:;" onclick="RemoveAddService(event)" class="btn btn-sm btn-outline-danger">Go back</a>
+        </div>
+    </div>
+    <select class="js-example-basic-multiple form-control" name="services[]" multiple="multiple">
+        <option disabled value="">Select Services</option>
+        <?php foreach($services as $firstkey => $service): ?>
+            <?php if(!is_null($attaSerives) && in_array($service->name, $attaSerives)): ?>
+                <option selected value="<?php echo e($service->name); ?>"><?php echo e(ucfirst($service->name)); ?></option>
+            <?php else: ?>
+                <option value="<?php echo e($service->name); ?>"><?php echo e(ucfirst($service->name)); ?></option>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </select>
+    <div class="row">
+        <div class="col-12 my-2 text-right">
+            <button type="submit" class="btn btn-sm btn-outline-success">Update Services</button>
+        </div>
+    </div>
+</form>

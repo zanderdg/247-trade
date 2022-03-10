@@ -1,0 +1,101 @@
+<?php /* Page title */ ?>
+
+<?php $__env->startSection('title'); ?>
+
+Forgot Password
+
+@parent
+
+<?php $__env->stopSection(); ?>
+
+
+
+<?php $__env->startSection('content'); ?>
+
+
+
+    <section class="signup-section">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="main login-dorm pb-4">
+    
+                        <h3>Recover Password</h3>
+    
+                        
+    
+                        <?php echo $__env->make('notifications', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    
+    
+    
+                        <form action="<?php echo e(route('client-forgot-password')); ?>" method="post">
+    
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" />
+    
+                            <div class="form-group">
+    
+                                <label for="inputUsernameEmail">Enter Your Email</label>
+    
+                                <div class="input-container">
+    
+                                    <i class="fa fa-user "></i>
+    
+                                    <input type="email" name="email" class="form-control" id="inputUsernameEmail"  placeholder="Enter email here">
+    
+                                </div>                      
+    
+                            </div>
+    
+                            <div class="form-group">
+    
+                                <div class="input-container">
+    
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+    
+                                    <select style="width:30.5rem; border:none; outline:none;" id="role" name="role" >
+    
+                                        <option value="">Select Role</option>
+    
+                                        <?php foreach($roles as $role): ?>
+    
+                                            <option value="<?php echo e(old('role', $role->slug)); ?>"><?php echo e($role->name); ?></option>
+    
+                                        <?php endforeach; ?>
+    
+                                    </select>
+    
+                                </div>
+    
+    
+    
+                            </div>
+    
+    
+    
+                            <div class="sign-up"> 
+    
+                                <button type="submit" class="cancelbtn">Recover Password</button>
+    
+                            </div>
+    
+    
+    
+                        </form>
+    
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

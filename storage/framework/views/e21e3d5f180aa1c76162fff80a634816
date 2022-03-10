@@ -1,0 +1,35 @@
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Categories
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <!-- Categories sectionstart -->
+    <section class="most-popular">
+        <div class="container">
+            <div class="row">
+            <div class="col-md-12">
+                <div class="mm-pp">
+                    <p>find suitable job from</p>
+                    <h3>CATEGORIES</h3>
+                </div>
+            </div>
+                <?php foreach($categories as $category): ?>
+                <div class="col-md-3">
+                    <div class="cate-ff">
+                        <a href="<?php echo e(route('postJob')); ?>?categoryName=<?php echo e($category->name); ?>" >
+                            <p><?php echo e(ucfirst($category->name)); ?></p>
+                        </a>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

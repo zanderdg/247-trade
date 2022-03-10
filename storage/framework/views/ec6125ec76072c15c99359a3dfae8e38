@@ -1,0 +1,129 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Registration
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    
+    <!-- signup section start -->
+
+    <section class="signup-section">
+        <div class="container">
+            <div class="main">
+                <h3>Sign up</h3>
+
+                <?php echo $__env->make('notifications', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                <form id="signupFrom" role="form" action="<?php echo e(route('client-registration')); ?>" method="post">
+                    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+                    
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="first_name">First Name</label>
+                                <div class="input-container" id="first_name">
+                                    <i class="fa fa-user "></i>
+                                    <input type="text" class="form-control <?php if($errors->registration->first('first_name')): ?> is-invalid <?php endif; ?>" name="first_name" value="<?php echo e(old('first_name')); ?>" placeholder="Enter name here...">
+                                </div>
+                                <?php if($errors->registration->first('first_name')): ?>
+                                    <div id="first_name" class="invalid-feedback">
+                                        <?php echo e($errors->registration->first('first_name')); ?>
+
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label for="last_name">Last Name</label>
+                                <div class="input-container" id="last_name" >
+                                    <i class="fa fa-user "></i>
+                                    <input type="text" class="form-control <?php if($errors->registration->first('last_name')): ?> is-invalid <?php endif; ?>" name="last_name" value="<?php echo e(old('last_name')); ?>" placeholder="Enter name here...">
+                                </div>
+                                <?php if($errors->registration->first('last_name')): ?>
+                                    <div id="last_name" class="invalid-feedback">
+                                        <?php echo e($errors->registration->first('last_name')); ?>
+
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Enter Your Email</label>
+                        <div class="input-container" id="email">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <input type="email" class="form-control <?php if($errors->registration->first('email')): ?> is-invalid <?php endif; ?>" name="email" value="<?php echo e(old('email')); ?>" placeholder="Enter email here"...>
+                        </div>
+                        <?php if($errors->registration->first('email')): ?>
+                            <div id="email" class="invalid-feedback">
+                                <?php echo e($errors->registration->first('email')); ?>
+
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Enter Your Password</label>
+                        <div class="input-container" id="password">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                            <input type="password" class="form-control <?php if($errors->registration->first('password')): ?> is-invalid <?php endif; ?>" name="password" placeholder="Enter password here">
+                        </div> 
+                        <?php if($errors->registration->first('password')): ?>
+                            <div id="password" class="invalid-feedback">
+                                <?php echo e($errors->registration->first('password')); ?>
+
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Enter Confirm Password</label>
+                        <div class="input-container" id="confirm_password">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                            <input type="password" class="form-control <?php if($errors->registration->first('confirm_password')): ?> is-invalid <?php endif; ?>" name="confirm_password" placeholder="Enter password here"...>
+                        </div>
+                        <?php if($errors->registration->first('confirm_password')): ?>
+                            <div id="confirm_password" class="invalid-feedback">
+                                <?php echo e($errors->registration->first('confirm_password')); ?>
+
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <?php if(!session()->has('jobPost')): ?>
+                        <div class="form-group">
+                            <label for="role">Account type*</label>
+                            <div class="input-container">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <select style="width:30.5rem; border:none; outline:none; <?php if($errors->registration->first('role')): ?> is-invalid <?php endif; ?>" id="role" name="role" >
+                                    <option value="">Select Role</option>
+                                    <?php foreach($roles as $role): ?>
+                                        <option value="<?php echo e(old('role', $role->slug)); ?>"><?php echo e($role->name); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <?php if($errors->registration->first('role')): ?>
+                                <div id="role" class="invalid-feedback">
+                                    <?php echo e($errors->registration->first('role')); ?>
+
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php else: ?>
+                    <?php endif; ?>
+                
+                    <div class="sign-up"> 
+                        <button type="submit" class="cancelbtn">Create Account</button>
+                    </div>
+                    <div class="login-or">
+                        <hr class="hr-or">
+                        <span class="span-or">or</span>
+                    </div>
+                    <div class="text-form"><a href="<?php echo e(route('client-login')); ?>">Login</a></div>
+                </form>
+            </div>
+        </div>
+    </section>
+  <!-- signup section end -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.site.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
